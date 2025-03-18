@@ -5,15 +5,11 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/ziming/laravel-get-response/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/ziming/laravel-get-response/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/ziming/laravel-get-response.svg?style=flat-square)](https://packagist.org/packages/ziming/laravel-get-response)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A PHP Laravel library for GetResponse API
 
-## Support us
+Still in progress, to be updated
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-get-response.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-get-response)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+## Support
 
 ## Installation
 
@@ -21,13 +17,6 @@ You can install the package via composer:
 
 ```bash
 composer require ziming/laravel-get-response
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-get-response-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -43,17 +32,10 @@ return [
 ];
 ```
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-get-response-views"
-```
-
 ## Usage
 
 ```php
-$laravelGetResponse = new Ziming\LaravelGetResponse();
-echo $laravelGetResponse->echoPhrase('Hello, Ziming!');
+// Still in Progress. To be updated
 ```
 
 ## Testing
