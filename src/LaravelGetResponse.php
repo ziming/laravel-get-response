@@ -6,7 +6,6 @@ namespace Ziming\LaravelGetResponse;
 
 use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\HeaderAuthenticator;
-use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 
 /*
@@ -14,7 +13,7 @@ use Saloon\Http\Connector;
  */
 class LaravelGetResponse extends Connector
 {
-    public function __construct(protected readonly string $token){}
+    public function __construct(protected readonly string $token) {}
 
     protected function defaultAuth(): HeaderAuthenticator
     {
