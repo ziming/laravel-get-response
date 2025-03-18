@@ -11,7 +11,6 @@ use Saloon\Http\Connector;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
-use Saloon\RateLimitPlugin\Stores\MemoryStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
 
 /*
