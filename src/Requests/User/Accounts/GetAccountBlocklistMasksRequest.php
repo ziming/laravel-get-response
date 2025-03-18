@@ -11,7 +11,7 @@ class GetAccountBlocklistMasksRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected readonly string $mask){}
+    public function __construct(protected readonly string $mask) {}
 
     protected function defaultQuery(): array
     {

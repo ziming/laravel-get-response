@@ -26,7 +26,7 @@ class UpdateAccountRequest extends Request implements HasBody
         protected readonly ?string $zipCode,
         protected readonly ?string $numberOfEmployees, // enum 50, 250, 500, more
         protected readonly ?string $timeFormat, // enum 12h, 24h
-    ){}
+    ) {}
 
     protected function defaultBody(): array
     {

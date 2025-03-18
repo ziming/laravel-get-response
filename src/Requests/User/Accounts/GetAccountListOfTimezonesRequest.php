@@ -11,12 +11,12 @@ class GetAccountListOfTimezonesRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected readonly array $fields){}
+    public function __construct(protected readonly array $fields) {}
 
     protected function defaultQuery(): array
     {
         return [
-            'fields' => implode( ',', $this->fields),
+            'fields' => implode(',', $this->fields),
         ];
     }
 

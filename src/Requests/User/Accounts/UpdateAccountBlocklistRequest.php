@@ -18,7 +18,7 @@ class UpdateAccountBlocklistRequest extends Request implements HasBody
     public function __construct(
         protected readonly array $masks,
         protected readonly ?string $additionalFlags,
-    ){}
+    ) {}
 
     protected function defaultQuery(): array
     {
