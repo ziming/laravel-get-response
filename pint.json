@@ -1,0 +1,11 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "declare_strict_types": true,
+        "simplified_null_return": true,
+        "simplified_if_return": true,
+        "strict_comparison": true,
+        "void_return": true,
+        "random_api_migration": true
+    }
+}

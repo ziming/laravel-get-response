@@ -1,12 +1,14 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+declare(strict_types=1);
+
+namespace Ziming\LaravelGetResponse\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelGetResponseCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-get-response';
 
     public $description = 'My command';
 
