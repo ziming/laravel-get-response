@@ -12,6 +12,7 @@ use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
+use Ziming\LaravelGetResponse\Resources\User\AccountResource;
 
 /*
  * Add Oauth authenticator in the future
@@ -47,8 +48,12 @@ class LaravelGetResponse extends Connector
     protected function resolveRateLimitStore(): RateLimitStore
     {
         return new LaravelCacheStore(
-            Cache::store(config('cache.default')
-            )
+            Cache::store(config('cache.default'))
         );
+    }
+
+    public function account(): AccountResource
+    {
+        return new AccountResource($this);
     }
 }
