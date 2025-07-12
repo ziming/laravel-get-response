@@ -11,9 +11,7 @@ class GetWebsiteByIdRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected readonly string $websiteId, protected readonly array $fields = [])
-    {
-    }
+    public function __construct(protected readonly string $websiteId, protected readonly array $fields = []) {}
 
     protected function defaultQuery(): array
     {
@@ -24,6 +22,6 @@ class GetWebsiteByIdRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/websites/' . $this->websiteId;
+        return '/websites/'.$this->websiteId;
     }
 }
