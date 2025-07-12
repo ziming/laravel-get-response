@@ -15,10 +15,9 @@ class GetAllWebinarsRequest extends Request
         protected readonly array $queryParameters = [],
         protected readonly array $sortParameters = [],
         protected readonly array $fields = [],
-        protected readonly int   $page = 1,
-        protected readonly int   $perPage = 100,
-    ) {
-    }
+        protected readonly int $page = 1,
+        protected readonly int $perPage = 100,
+    ) {}
 
     protected function defaultQuery(): array
     {
