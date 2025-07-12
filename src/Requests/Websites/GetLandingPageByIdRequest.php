@@ -11,9 +11,7 @@ class GetLandingPageByIdRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected readonly string $landingPageId, protected readonly array $fields = [])
-    {
-    }
+    public function __construct(protected readonly string $landingPageId, protected readonly array $fields = []) {}
 
     protected function defaultQuery(): array
     {
@@ -24,6 +22,6 @@ class GetLandingPageByIdRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/landing-pages/' . $this->landingPageId;
+        return '/landing-pages/'.$this->landingPageId;
     }
 }

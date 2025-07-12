@@ -18,8 +18,7 @@ class GetAllLandingPagesRequest extends Request
         protected readonly array $fields = [],
         protected readonly int $page = 1,
         protected readonly int $perPage = 100,
-    ) {
-    }
+    ) {}
 
     protected function defaultQuery(): array
     {
