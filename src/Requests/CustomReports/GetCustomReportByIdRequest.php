@@ -13,9 +13,8 @@ class GetCustomReportByIdRequest extends Request
 
     public function __construct(
         protected readonly string $customReportId,
-        protected readonly array  $fields = [],
-    ) {
-    }
+        protected readonly array $fields = [],
+    ) {}
 
     protected function defaultQuery(): array
     {
@@ -26,6 +25,6 @@ class GetCustomReportByIdRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/reports/' . $this->customReportId;
+        return '/reports/'.$this->customReportId;
     }
 }

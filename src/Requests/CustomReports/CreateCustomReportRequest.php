@@ -19,8 +19,7 @@ class CreateCustomReportRequest extends Request implements HasBody
         protected readonly string $name,
         protected readonly string $type,
         protected readonly array $scheduling,
-    ) {
-    }
+    ) {}
 
     protected function defaultBody(): array
     {
