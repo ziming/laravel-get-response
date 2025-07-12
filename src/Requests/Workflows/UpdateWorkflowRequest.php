@@ -25,6 +25,6 @@ class UpdateWorkflowRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/workflows/' . $this->workflowId;
+        return '/workflows/'.$this->workflowId;
     }
 }
