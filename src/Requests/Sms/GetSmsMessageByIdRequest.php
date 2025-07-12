@@ -25,6 +25,6 @@ class GetSmsMessageByIdRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/sms/' . $this->smsId;
+        return '/sms/'.$this->smsId;
     }
 }

@@ -13,5 +13,3 @@ it('can create sms message', function (): void {
 it('can get sms message by id', function (): void {
     expect(true)->toBeTrue();
 });
-
-

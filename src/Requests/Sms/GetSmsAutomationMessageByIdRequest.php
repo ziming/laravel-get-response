@@ -25,6 +25,6 @@ class GetSmsAutomationMessageByIdRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/sms-automation/' . $this->smsAutomationMessageId;
+        return '/sms-automation/'.$this->smsAutomationMessageId;
     }
 }
