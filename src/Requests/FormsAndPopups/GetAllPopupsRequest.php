@@ -19,8 +19,7 @@ class GetAllPopupsRequest extends Request
         protected readonly int $page = 1,
         protected readonly int $perPage = 100,
         protected readonly bool $withStatistics = false,
-    ) {
-    }
+    ) {}
 
     protected function defaultQuery(): array
     {

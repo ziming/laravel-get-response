@@ -14,8 +14,7 @@ class GetPopupByIdRequest extends Request
     public function __construct(
         protected readonly string $popupId,
         protected readonly array $fields = [],
-    ) {
-    }
+    ) {}
 
     protected function defaultQuery(): array
     {
@@ -26,6 +25,6 @@ class GetPopupByIdRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/popups/' . $this->popupId;
+        return '/popups/'.$this->popupId;
     }
 }
