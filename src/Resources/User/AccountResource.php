@@ -16,7 +16,7 @@ class AccountResource extends BaseResource
      * @throws FatalRequestException
      * @throws RequestException
      */
-    public function getAccoountInformation(array $fields): Response
+    public function getAccountInformation(array $fields): Response
     {
         return $this->connector->send(new GetAccountInformationRequest($fields));
     }
