@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelGetResponse\Requests\Automation\CustomEvents;
 
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasJsonBody;
 
 class UpdateCustomEventRequest extends Request implements HasBody
@@ -23,7 +23,7 @@ class UpdateCustomEventRequest extends Request implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return '/custom-events/' . $this->customEventId;
+        return '/custom-events/'.$this->customEventId;
     }
 
     protected function defaultBody(): array

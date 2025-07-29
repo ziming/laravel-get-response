@@ -17,6 +17,6 @@ class DeleteCustomEventRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return '/custom-events/' . $this->customEventId;
+        return '/custom-events/'.$this->customEventId;
     }
 }

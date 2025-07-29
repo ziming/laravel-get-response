@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelGetResponse\Requests\Automation\CustomEvents;
 
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Contracts\Body\HasBody;
 use Saloon\Traits\Body\HasJsonBody;
 
 class CreateCustomEventRequest extends Request implements HasBody
