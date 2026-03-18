@@ -11,6 +11,8 @@ Still in progress, to be updated
 
 ## Support
 
+- Laravel 10.x, 11.x, 12.x, and 13.x
+
 ## Installation
 
 You can install the package via composer:
