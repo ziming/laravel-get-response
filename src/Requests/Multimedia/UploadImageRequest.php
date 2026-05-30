@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelGetResponse\Requests\Multimedia;
 
+use Psr\Http\Message\StreamInterface;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Data\MultipartValue;
 use Saloon\Enums\Method;
@@ -22,7 +23,7 @@ class UploadImageRequest extends Request implements HasBody
     use HasMultipartBody;
 
     /**
-     * @param  resource|string|int|float|\Psr\Http\Message\StreamInterface  $file
+     * @param  resource|string|int|float|StreamInterface  $file
      * @param  array<string, mixed>  $fileHeaders
      */
     public function __construct(

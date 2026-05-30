@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ziming\LaravelGetResponse\Resources;
 
+use Psr\Http\Message\StreamInterface;
 use Saloon\Exceptions\Request\FatalRequestException;
 use Saloon\Exceptions\Request\RequestException;
 use Saloon\Http\BaseResource;
@@ -26,7 +27,7 @@ class MultimediaResource extends BaseResource
     }
 
     /**
-     * @param  resource|string|int|float|\Psr\Http\Message\StreamInterface  $file
+     * @param  resource|string|int|float|StreamInterface  $file
      * @param  array<string, mixed>  $headers
      *
      * @throws FatalRequestException
