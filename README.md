@@ -65,6 +65,54 @@ $getResponse->contacts()->createContact(
 $getResponse->contacts()->getContactById(contactId: 'pVyRW');
 ```
 
+### Authentication
+
+The connector supports both authentication methods documented by GetResponse: **API key** and
+**OAuth 2.0**. API key is the primary method and should be used in most cases.
+
+```php
+use Ziming\LaravelGetResponse\LaravelGetResponse;
+
+// API key — sent verbatim in the `X-Auth-Token` header, so it must include the `api-key ` prefix.
+$getResponse = new LaravelGetResponse('api-key your-secret-key');
+// or, equivalently and more explicitly:
+$getResponse = LaravelGetResponse::usingApiKey('api-key your-secret-key');
+
+// OAuth 2.0 — pass the access token (without a prefix); it is sent as `Authorization: Bearer ...`.
+$getResponse = LaravelGetResponse::usingOAuth($accessToken);
+```
+
+> The package does not perform the OAuth 2.0 authorization flow for you. Obtain the access token
+> with your preferred OAuth client (using the Authorization Code, Client Credentials, Implicit or
+> Refresh Token flow), then hand it to `usingOAuth()`.
+
+### GetResponse MAX
+
+[GetResponse MAX](https://apireference.getresponse.com/#section/GetResponse-MAX) accounts use a
+different base URL and must send an `X-Domain` header on every request. Pass your domain and the
+matching base URL constant:
+
+```php
+use Ziming\LaravelGetResponse\LaravelGetResponse;
+
+// MAX US environment with an API key
+$getResponse = LaravelGetResponse::usingApiKey(
+    apiKey: 'api-key your-secret-key',
+    domain: 'your-company.getresponse360.com',
+    baseUrl: LaravelGetResponse::MAX_US_BASE_URL,
+);
+
+// MAX PL environment with OAuth 2.0
+$getResponse = LaravelGetResponse::usingOAuth(
+    accessToken: $accessToken,
+    domain: 'your-company.getresponse360.pl',
+    baseUrl: LaravelGetResponse::MAX_PL_BASE_URL,
+);
+```
+
+Available base URL constants: `LaravelGetResponse::BASE_URL` (default, non-MAX),
+`LaravelGetResponse::MAX_US_BASE_URL` and `LaravelGetResponse::MAX_PL_BASE_URL`.
+
 Resources mirror the API groups, for example:
 
 ```php

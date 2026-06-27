@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Ziming\LaravelGetResponse;
 
 use Illuminate\Support\Facades\Cache;
+use Saloon\Contracts\Authenticator;
 use Saloon\Http\Auth\HeaderAuthenticator;
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\RateLimitPlugin\Contracts\RateLimitStore;
 use Saloon\RateLimitPlugin\Limit;
 use Saloon\RateLimitPlugin\Stores\LaravelCacheStore;
 use Saloon\RateLimitPlugin\Traits\HasRateLimits;
+use Ziming\LaravelGetResponse\Enums\AuthMethod;
 use Ziming\LaravelGetResponse\Resources\AbTestsResource;
 use Ziming\LaravelGetResponse\Resources\AbTestsSubjectResource;
 use Ziming\LaravelGetResponse\Resources\AccountsResource;
@@ -56,23 +59,90 @@ use Ziming\LaravelGetResponse\Resources\WebinarsResource;
 use Ziming\LaravelGetResponse\Resources\WebsitesResource;
 use Ziming\LaravelGetResponse\Resources\WorkflowsResource;
 
-/*
- * Add OAuth authenticator in the future
- */
 class LaravelGetResponse extends Connector
 {
     use HasRateLimits;
 
-    public function __construct(protected readonly string $token) {}
+    /**
+     * Default GetResponse (SMB) API base URL.
+     */
+    public const string BASE_URL = 'https://api.getresponse.com/v3/';
 
-    protected function defaultAuth(): HeaderAuthenticator
+    /**
+     * GetResponse MAX (US environment) API base URL.
+     */
+    public const string MAX_US_BASE_URL = 'https://api3.getresponse360.com/v3/';
+
+    /**
+     * GetResponse MAX (PL environment) API base URL.
+     */
+    public const string MAX_PL_BASE_URL = 'https://api3.getresponse360.pl/v3/';
+
+    /**
+     * @param  string  $token  An `api-key ` prefixed API key, or an OAuth 2.0 access token.
+     * @param  AuthMethod  $authMethod  How $token should be sent.
+     * @param  string|null  $domain  GetResponse MAX domain, sent as the `X-Domain` header. Required for MAX accounts.
+     * @param  string  $baseUrl  API base URL. Use one of the MAX_* constants for GetResponse MAX.
+     */
+    final public function __construct(
+        protected readonly string $token,
+        protected readonly AuthMethod $authMethod = AuthMethod::ApiKey,
+        protected readonly ?string $domain = null,
+        protected readonly string $baseUrl = self::BASE_URL,
+    ) {}
+
+    /**
+     * Authenticate with a GetResponse API key.
+     *
+     * The key is sent verbatim in the `X-Auth-Token` header, so it must already
+     * include the `api-key ` prefix (e.g. `api-key your-secret-key`).
+     *
+     * Pass $domain (and a MAX_* $baseUrl) for GetResponse MAX accounts.
+     */
+    public static function usingApiKey(
+        string $apiKey,
+        ?string $domain = null,
+        string $baseUrl = self::BASE_URL,
+    ): static {
+        return new static($apiKey, AuthMethod::ApiKey, $domain, $baseUrl);
+    }
+
+    /**
+     * Authenticate with an OAuth 2.0 access token, sent as `Authorization: Bearer <token>`.
+     *
+     * Pass $domain (and a MAX_* $baseUrl) for GetResponse MAX accounts.
+     */
+    public static function usingOAuth(
+        string $accessToken,
+        ?string $domain = null,
+        string $baseUrl = self::BASE_URL,
+    ): static {
+        return new static($accessToken, AuthMethod::OAuth2, $domain, $baseUrl);
+    }
+
+    protected function defaultAuth(): Authenticator
     {
-        return new HeaderAuthenticator($this->token, 'X-AUTH-TOKEN');
+        return match ($this->authMethod) {
+            AuthMethod::ApiKey => new HeaderAuthenticator($this->token, 'X-Auth-Token'),
+            AuthMethod::OAuth2 => new TokenAuthenticator($this->token),
+        };
+    }
+
+    /**
+     * GetResponse MAX customers must send an `X-Domain` header on every request.
+     *
+     * @return array<string, string>
+     */
+    protected function defaultHeaders(): array
+    {
+        return $this->domain !== null
+            ? ['X-Domain' => $this->domain]
+            : [];
     }
 
     public function resolveBaseUrl(): string
     {
-        return 'https://api.getresponse.com/v3/';
+        return $this->baseUrl;
     }
 
     protected function resolveLimits(): array

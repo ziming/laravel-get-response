@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Ziming\LaravelGetResponse\Enums\AuthMethod;
 use Ziming\LaravelGetResponse\LaravelGetResponse;
+use Ziming\LaravelGetResponse\Requests\Accounts\GetAccountRequest;
 use Ziming\LaravelGetResponse\Resources\AbTestsResource;
 use Ziming\LaravelGetResponse\Resources\AbTestsSubjectResource;
 use Ziming\LaravelGetResponse\Resources\AccountsResource;
@@ -102,4 +104,64 @@ it('exposes a resource accessor for every API group', function (string $method, 
 it('points at the GetResponse API base url', function (): void {
     expect((new LaravelGetResponse('fake-token'))->resolveBaseUrl())
         ->toBe('https://api.getresponse.com/v3/');
+});
+
+it('authenticates with an api key by default', function (): void {
+    $pendingRequest = (new LaravelGetResponse('api-key secret'))
+        ->createPendingRequest(new GetAccountRequest);
+
+    expect($pendingRequest->headers()->get('X-Auth-Token'))->toBe('api-key secret')
+        ->and($pendingRequest->headers()->get('Authorization'))->toBeNull();
+});
+
+it('authenticates with an api key via the named constructor', function (): void {
+    $connector = LaravelGetResponse::usingApiKey('api-key secret');
+
+    expect($connector->createPendingRequest(new GetAccountRequest)->headers()->get('X-Auth-Token'))
+        ->toBe('api-key secret');
+});
+
+it('authenticates with an OAuth 2.0 bearer token', function (): void {
+    $connector = LaravelGetResponse::usingOAuth('oauth-access-token');
+
+    $pendingRequest = $connector->createPendingRequest(new GetAccountRequest);
+
+    expect($pendingRequest->headers()->get('Authorization'))->toBe('Bearer oauth-access-token')
+        ->and($pendingRequest->headers()->get('X-Auth-Token'))->toBeNull();
+});
+
+it('does not send an X-Domain header for non-MAX accounts', function (): void {
+    $pendingRequest = (new LaravelGetResponse('fake-token'))
+        ->createPendingRequest(new GetAccountRequest);
+
+    expect($pendingRequest->headers()->get('X-Domain'))->toBeNull();
+});
+
+it('supports GetResponse MAX with a base url and X-Domain header', function (): void {
+    $connector = LaravelGetResponse::usingApiKey(
+        apiKey: 'api-key secret',
+        domain: 'my-company.getresponse360.com',
+        baseUrl: LaravelGetResponse::MAX_US_BASE_URL,
+    );
+
+    $pendingRequest = $connector->createPendingRequest(new GetAccountRequest);
+
+    expect($connector->resolveBaseUrl())->toBe('https://api3.getresponse360.com/v3/')
+        ->and($pendingRequest->headers()->get('X-Domain'))->toBe('my-company.getresponse360.com')
+        ->and($pendingRequest->headers()->get('X-Auth-Token'))->toBe('api-key secret');
+});
+
+it('supports GetResponse MAX with OAuth and an X-Domain header', function (): void {
+    $connector = new LaravelGetResponse(
+        token: 'oauth-access-token',
+        authMethod: AuthMethod::OAuth2,
+        domain: 'my-company.getresponse360.pl',
+        baseUrl: LaravelGetResponse::MAX_PL_BASE_URL,
+    );
+
+    $pendingRequest = $connector->createPendingRequest(new GetAccountRequest);
+
+    expect($connector->resolveBaseUrl())->toBe('https://api3.getresponse360.pl/v3/')
+        ->and($pendingRequest->headers()->get('Authorization'))->toBe('Bearer oauth-access-token')
+        ->and($pendingRequest->headers()->get('X-Domain'))->toBe('my-company.getresponse360.pl');
 });
